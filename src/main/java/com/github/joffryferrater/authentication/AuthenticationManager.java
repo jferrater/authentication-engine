@@ -33,13 +33,13 @@ public class AuthenticationManager {
         LdapConfig ldapConfig = securityConfig.getLdapConfig();
         DefaultLdapRealm ldapRealm = new DefaultLdapRealm();
         ldapRealm.setUserDnTemplate(UID_TEMPLATE + ldapConfig.getOrganizationUnit());
-        JndiLdapContextFactory jndiLdapContextFactory = createLdapContext(ldapConfig);
+        JndiLdapContextFactory jndiLdapContextFactory = createLdapContext(ldapConfig, ldapRealm);
         ldapRealm.setContextFactory(jndiLdapContextFactory);
         securityManager.setRealm(ldapRealm);
     }
 
-    private JndiLdapContextFactory createLdapContext(LdapConfig ldapConfig) {
-        JndiLdapContextFactory jndiLdapContextFactory = new JndiLdapContextFactory();
+    private JndiLdapContextFactory createLdapContext(LdapConfig ldapConfig, DefaultLdapRealm ldapRealm) {
+        JndiLdapContextFactory jndiLdapContextFactory = (JndiLdapContextFactory) ldapRealm.getContextFactory();
         jndiLdapContextFactory.setSystemUsername(ldapConfig.getAdminDn());
         jndiLdapContextFactory.setSystemPassword(ldapConfig.getPassword());
         jndiLdapContextFactory.setUrl(ldapConfig.getUrl());
