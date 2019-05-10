@@ -8,6 +8,11 @@ pipeline {
             steps {
                 sh './gradlew clean build'
             }
+            post {
+                always {
+                    junit(testResults: '**/build/test-results/test/TEST-*.xml', allowEmptyResults: true)
+                }
+            }
         }
     }
 }
