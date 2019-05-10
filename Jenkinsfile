@@ -19,7 +19,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                ./gradlew publishToMavenLocal
+                sh './gradlew publishToMavenLocal'
             }
         }
     }
