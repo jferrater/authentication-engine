@@ -14,5 +14,13 @@ pipeline {
                 }
             }
         }
+        stage('Publish to local maven repository') {
+            when {
+                branch 'master'
+            }
+            steps {
+                ./gradlew publishToMavenLocal
+            }
+        }
     }
 }
