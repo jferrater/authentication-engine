@@ -15,7 +15,7 @@ public class Authenticator {
 
     public Optional<UserInfo> authenticate(UserCredentials userCredentials) {
         Subject currentUser = SecurityUtils.getSubject();
-        if(!currentUser.isAuthenticated()) {
+        if (!currentUser.isAuthenticated()) {
             final String username = userCredentials.getUsername();
             final String password = userCredentials.getPassword();
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);

@@ -66,7 +66,7 @@ class AuthenticatorTest {
         @Override
         protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
             Object principal = token.getPrincipal();
-            if(PRINCIPAL.equalsIgnoreCase(principal.toString())) {
+            if (PRINCIPAL.equalsIgnoreCase(principal.toString())) {
                 return new SimpleAuthenticationInfo(PRINCIPAL, PASSWORD, "TestRealm");
             }
             throw new AuthenticationException("Username or password is invalid");
