@@ -5,6 +5,33 @@ public class JdbcConfig {
     private String url;
     private String user;
     private String password;
+    private String permissionsQuery;
+    private String authenticationQuery;
+    private String rolesQuery;
+
+    public String getAuthenticationQuery() {
+        return authenticationQuery;
+    }
+
+    public void setAuthenticationQuery(String authenticationQuery) {
+        this.authenticationQuery = authenticationQuery;
+    }
+
+    public String getRolesQuery() {
+        return rolesQuery;
+    }
+
+    public void setRolesQuery(String rolesQuery) {
+        this.rolesQuery = rolesQuery;
+    }
+
+    public String getPermissionsQuery() {
+        return permissionsQuery;
+    }
+
+    public void setPermissionsQuery(String permissionsQuery) {
+        this.permissionsQuery = permissionsQuery;
+    }
 
     public String getUrl() {
         return url;
