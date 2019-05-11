@@ -1,7 +1,6 @@
 package com.github.joffryferrater.authentication;
 
 import com.github.joffryferrater.authentication.config.LdapConfig;
-import com.github.joffryferrater.authentication.config.SecurityConfig;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.ldap.DefaultLdapRealm;
@@ -9,20 +8,20 @@ import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AuthenticationManager {
+public class LdapRealmAuthenticator extends Authenticator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LdapRealmAuthenticator.class);
     private static final String UID_TEMPLATE = "uid={0}";
 
-    private SecurityConfig securityConfig;
+    private LdapConfig ldapConfig;
 
-    public AuthenticationManager(SecurityConfig securityConfig) {
-        this.securityConfig = securityConfig;
+    public LdapRealmAuthenticator(LdapConfig ldapConfig) {
+        this.ldapConfig = ldapConfig;
     }
 
     public void initializeSecurityManager() {
         DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
-        if (securityConfig.getLdapConfig() != null) {
+        if (ldapConfig != null) {
             LOGGER.info("Setting ldap realm to security manager");
             setLdapRealm(defaultSecurityManager);
         }
@@ -30,8 +29,8 @@ public class AuthenticationManager {
     }
 
     private void setLdapRealm(DefaultSecurityManager securityManager) {
-        LdapConfig ldapConfig = securityConfig.getLdapConfig();
         DefaultLdapRealm ldapRealm = new DefaultLdapRealm();
+        ldapRealm.setAuthenticationCachingEnabled(true);
         ldapRealm.setUserDnTemplate(UID_TEMPLATE + ldapConfig.getOrganizationUnit());
         JndiLdapContextFactory jndiLdapContextFactory = createLdapContext(ldapConfig, ldapRealm);
         ldapRealm.setContextFactory(jndiLdapContextFactory);

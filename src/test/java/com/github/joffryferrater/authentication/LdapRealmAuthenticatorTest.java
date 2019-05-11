@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import com.github.joffryferrater.authentication.config.LdapConfig;
-import com.github.joffryferrater.authentication.config.SecurityConfig;
 import java.util.Collection;
 import java.util.Optional;
 import org.apache.shiro.SecurityUtils;
@@ -19,19 +18,17 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @TestInstance(Lifecycle.PER_CLASS)
-class AuthenticationManagerTest {
+class LdapRealmAuthenticatorTest {
 
-    private SecurityConfig securityConfig;
+    private LdapConfig ldapConfig;
 
     @BeforeAll
     void setUp() {
-        LdapConfig ldapConfig = new LdapConfig();
+        ldapConfig = new LdapConfig();
         ldapConfig.setAdminDn("uid=admin,dc=com");
         ldapConfig.setOrganizationUnit("ou=users,dc=com");
         ldapConfig.setPassword("password");
         ldapConfig.setUrl("ldap://localhost:389");
-        securityConfig = new SecurityConfig();
-        securityConfig.setLdapConfig(ldapConfig);
     }
 
     @AfterAll
@@ -41,8 +38,8 @@ class AuthenticationManagerTest {
 
     @Test
     void shouldUseLdapRealm() {
-        AuthenticationManager authenticationManager = new AuthenticationManager(securityConfig);
-        authenticationManager.initializeSecurityManager();
+        LdapRealmAuthenticator target = new LdapRealmAuthenticator(ldapConfig);
+        target.initializeSecurityManager();
 
         DefaultSecurityManager defaultSecurityManager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
         Collection<Realm> realms = defaultSecurityManager.getRealms();
