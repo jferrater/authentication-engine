@@ -36,6 +36,7 @@ public class JdbcRealmAuthenticator extends Authenticator {
     private void setJdbcRealm(DefaultSecurityManager defaultSecurityManager) {
         setHikariDatasource();
         JdbcRealm jdbcRealm = new JdbcRealm();
+        jdbcRealm.setAuthenticationCachingEnabled(true);
         jdbcRealm.setDataSource(hikariDataSource);
         jdbcRealm.setSaltStyle(NO_SALT);
         jdbcRealm.setPermissionsLookupEnabled(true);

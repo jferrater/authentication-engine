@@ -8,7 +8,7 @@ import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LdapRealmAuthenticator {
+public class LdapRealmAuthenticator extends Authenticator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LdapRealmAuthenticator.class);
     private static final String UID_TEMPLATE = "uid={0}";
