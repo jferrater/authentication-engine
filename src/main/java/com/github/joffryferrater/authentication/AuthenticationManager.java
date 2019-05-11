@@ -32,6 +32,7 @@ public class AuthenticationManager {
     private void setLdapRealm(DefaultSecurityManager securityManager) {
         LdapConfig ldapConfig = securityConfig.getLdapConfig();
         DefaultLdapRealm ldapRealm = new DefaultLdapRealm();
+        ldapRealm.setAuthenticationCachingEnabled(true);
         ldapRealm.setUserDnTemplate(UID_TEMPLATE + ldapConfig.getOrganizationUnit());
         JndiLdapContextFactory jndiLdapContextFactory = createLdapContext(ldapConfig, ldapRealm);
         ldapRealm.setContextFactory(jndiLdapContextFactory);
