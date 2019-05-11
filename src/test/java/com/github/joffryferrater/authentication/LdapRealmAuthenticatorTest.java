@@ -19,7 +19,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @TestInstance(Lifecycle.PER_CLASS)
-class AuthenticationManagerTest {
+class LdapRealmAuthenticatorTest {
 
     private SecurityConfig securityConfig;
 
@@ -41,7 +41,7 @@ class AuthenticationManagerTest {
         ldapConfig.setPassword("password");
         ldapConfig.setUrl("ldap://localhost:389");
         securityConfig.setLdapConfig(ldapConfig);
-        AuthenticationManager target = new AuthenticationManager(securityConfig);
+        LdapRealmAuthenticator target = new LdapRealmAuthenticator(securityConfig);
         target.initializeSecurityManager();
 
         DefaultSecurityManager defaultSecurityManager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
