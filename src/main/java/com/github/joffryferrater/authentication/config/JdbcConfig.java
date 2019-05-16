@@ -5,9 +5,18 @@ public class JdbcConfig implements RealmConfig {
     private String url;
     private String user;
     private String password;
+    private String driverClassName;
     private String permissionsQuery;
     private String authenticationQuery;
     private String rolesQuery;
+
+    public String getDriverClassName() {
+        return driverClassName;
+    }
+
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
+    }
 
     public String getAuthenticationQuery() {
         return authenticationQuery;
