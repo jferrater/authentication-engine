@@ -8,10 +8,9 @@ import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LdapRealmAuthenticator extends Authenticator {
+public class LdapRealmAuthenticator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LdapRealmAuthenticator.class);
-    private static final String UID_TEMPLATE = "uid={0}";
 
     private LdapConfig ldapConfig;
 
@@ -19,8 +18,7 @@ public class LdapRealmAuthenticator extends Authenticator {
         this.ldapConfig = ldapConfig;
     }
 
-    public void initializeSecurityManager() {
-        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
+    public void initializeSecurityManager(DefaultSecurityManager defaultSecurityManager) {
         if (ldapConfig != null) {
             LOGGER.info("Setting ldap realm to security manager");
             setLdapRealm(defaultSecurityManager);
@@ -31,7 +29,9 @@ public class LdapRealmAuthenticator extends Authenticator {
     private void setLdapRealm(DefaultSecurityManager securityManager) {
         DefaultLdapRealm ldapRealm = new DefaultLdapRealm();
         ldapRealm.setAuthenticationCachingEnabled(true);
-        ldapRealm.setUserDnTemplate(UID_TEMPLATE + ldapConfig.getOrganizationUnit());
+        String userDnTemplate = ldapConfig.getUserDnTemplate();
+        LOGGER.debug("User DN template {}", userDnTemplate);
+        ldapRealm.setUserDnTemplate(userDnTemplate);
         JndiLdapContextFactory jndiLdapContextFactory = createLdapContext(ldapConfig, ldapRealm);
         ldapRealm.setContextFactory(jndiLdapContextFactory);
         securityManager.setRealm(ldapRealm);

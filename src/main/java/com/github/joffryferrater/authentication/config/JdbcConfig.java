@@ -1,6 +1,6 @@
 package com.github.joffryferrater.authentication.config;
 
-public class JdbcConfig {
+public class JdbcConfig implements RealmConfig {
 
     private String url;
     private String user;
