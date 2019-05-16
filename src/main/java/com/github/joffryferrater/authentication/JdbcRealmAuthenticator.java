@@ -49,6 +49,7 @@ public class JdbcRealmAuthenticator {
         hikariConfig.setJdbcUrl(jdbcConfig.getUrl());
         hikariConfig.setUsername(jdbcConfig.getUser());
         hikariConfig.setPassword(jdbcConfig.getPassword());
+        hikariConfig.setDriverClassName(jdbcConfig.getDriverClassName());
         hikariConfig.addDataSourceProperty("cachePrepStmts", "true");
         hikariConfig.addDataSourceProperty("prepStmtCacheSize", "250");
         hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

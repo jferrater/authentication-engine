@@ -24,6 +24,7 @@ class JdbcRealmAuthenticatorTest {
     @BeforeAll
     void setUp() {
         jdbcConfig = new JdbcConfig();
+        jdbcConfig.setDriverClassName("org.hsqldb.jdbc.JDBCDriver");
         jdbcConfig.setUrl("jdbc:hsqldb:mem:test");
         jdbcConfig.setUser("user");
         jdbcConfig.setPassword("password");
