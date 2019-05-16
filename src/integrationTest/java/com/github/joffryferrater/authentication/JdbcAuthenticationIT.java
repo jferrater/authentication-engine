@@ -48,4 +48,26 @@ class JdbcAuthenticationIT {
         assertThat(result.get().getUsername(), is(username));
         assertThat(result.get().isAuthenticated(), is(true));
     }
+
+    @Test
+    void shouldNotBeAuthenticatedForInvalidPassword() {
+        String username = "joffry";
+        String password = "password1234";
+        UserCredentials userCredentials = new UserCredentials(username, password);
+
+        Optional<UserInfo> result = target.authenticateCurrentUser(userCredentials);
+
+        assertThat(result.isPresent(), is(false));
+    }
+
+    @Test
+    void shouldNotBeAuthenticatedForUnknownUser() {
+        String username = "leo";
+        String password = "password123";
+        UserCredentials userCredentials = new UserCredentials(username, password);
+
+        Optional<UserInfo> result = target.authenticateCurrentUser(userCredentials);
+
+        assertThat(result.isPresent(), is(false));
+    }
 }
