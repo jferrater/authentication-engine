@@ -16,11 +16,18 @@ pipeline {
         }
         stage('Integration tests') {
             steps {
+                dir('docker') {
+                    sh 'docker-compose up -d'
+                }
+                sleep(time:5, unit: "SECONDS")
                 sh './gradlew integrationTest'
             }
             post {
                 always {
                     junit(testResults: '**/build/test-results/integrationTest/TEST-*.xml', allowEmptyResults: true)
+                    dir('docker') {
+                        sh 'docker-compose down -v'
+                    }
                 }
             }
         }
