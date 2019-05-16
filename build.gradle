@@ -22,6 +22,7 @@ testSets {
 }
 
 integrationTest {
+    useJUnitPlatform()
     integrationTest.outputs.upToDateWhen { false }
     failFast = true
     dependsOn 'cleanIntegrationTest'
