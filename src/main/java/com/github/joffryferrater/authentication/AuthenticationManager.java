@@ -1,5 +1,6 @@
 package com.github.joffryferrater.authentication;
 
+import com.github.joffryferrater.authentication.config.JdbcConfig;
 import com.github.joffryferrater.authentication.config.LdapConfig;
 import com.github.joffryferrater.authentication.config.RealmConfig;
 import java.util.Optional;
@@ -16,11 +17,13 @@ public class AuthenticationManager extends Authenticator {
     public Optional<UserInfo> authenticateCurrentUser(UserCredentials userCredentials) {
         DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
         RealmConfig realmConfig = configuration.getRealmConfig();
-        if(realmConfig instanceof LdapConfig) {
+        if (realmConfig instanceof LdapConfig) {
             LdapRealmAuthenticator ldapRealmAuthenticator = new LdapRealmAuthenticator((LdapConfig) realmConfig);
             ldapRealmAuthenticator.initializeSecurityManager(defaultSecurityManager);
-            return authenticate(userCredentials);
+        } else if (realmConfig instanceof JdbcConfig) {
+            JdbcRealmAuthenticator jdbcRealmAuthenticator = new JdbcRealmAuthenticator((JdbcConfig) realmConfig);
+            jdbcRealmAuthenticator.initializeSecurityManager(defaultSecurityManager);
         }
-        return Optional.empty();
+        return authenticate(userCredentials);
     }
 }
