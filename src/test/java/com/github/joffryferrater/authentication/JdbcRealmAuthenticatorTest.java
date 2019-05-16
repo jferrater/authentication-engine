@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 import com.github.joffryferrater.authentication.config.JdbcConfig;
 import java.util.Collection;
 import java.util.Optional;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
@@ -37,10 +36,10 @@ class JdbcRealmAuthenticatorTest {
 
     @Test
     void shouldUseJdbcRealm() {
+        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
         JdbcRealmAuthenticator target = new JdbcRealmAuthenticator(jdbcConfig);
-        target.initializeSecurityManager();
+        target.initializeSecurityManager(defaultSecurityManager);
 
-        DefaultSecurityManager defaultSecurityManager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
         Collection<Realm> realms = defaultSecurityManager.getRealms();
         Optional<Realm> result = realms.stream().filter(realm -> realm instanceof JdbcRealm).findFirst();
 

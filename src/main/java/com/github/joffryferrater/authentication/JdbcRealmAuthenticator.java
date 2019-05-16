@@ -11,7 +11,7 @@ import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JdbcRealmAuthenticator extends Authenticator {
+public class JdbcRealmAuthenticator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JdbcRealmAuthenticator.class);
 
@@ -24,8 +24,7 @@ public class JdbcRealmAuthenticator extends Authenticator {
         this.jdbcConfig = jdbcConfig;
     }
 
-    public void initializeSecurityManager() {
-        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
+    public void initializeSecurityManager(DefaultSecurityManager defaultSecurityManager) {
         if (jdbcConfig != null) {
             LOGGER.info("Setting jdbc realm to security manager");
             setJdbcRealm(defaultSecurityManager);

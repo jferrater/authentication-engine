@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 import com.github.joffryferrater.authentication.config.LdapConfig;
 import java.util.Collection;
 import java.util.Optional;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.ldap.DefaultLdapRealm;
@@ -38,10 +37,10 @@ class LdapRealmAuthenticatorTest {
 
     @Test
     void shouldUseLdapRealm() {
+        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
         LdapRealmAuthenticator target = new LdapRealmAuthenticator(ldapConfig);
-        target.initializeSecurityManager();
+        target.initializeSecurityManager(defaultSecurityManager);
 
-        DefaultSecurityManager defaultSecurityManager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
         Collection<Realm> realms = defaultSecurityManager.getRealms();
         Optional<Realm> result = realms.stream().filter(realm -> realm instanceof DefaultLdapRealm).findFirst();
 

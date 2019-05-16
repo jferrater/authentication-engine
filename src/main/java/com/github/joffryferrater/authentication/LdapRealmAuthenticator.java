@@ -8,7 +8,7 @@ import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LdapRealmAuthenticator extends Authenticator {
+public class LdapRealmAuthenticator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LdapRealmAuthenticator.class);
 
@@ -18,8 +18,7 @@ public class LdapRealmAuthenticator extends Authenticator {
         this.ldapConfig = ldapConfig;
     }
 
-    public void initializeSecurityManager() {
-        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
+    public void initializeSecurityManager(DefaultSecurityManager defaultSecurityManager) {
         if (ldapConfig != null) {
             LOGGER.info("Setting ldap realm to security manager");
             setLdapRealm(defaultSecurityManager);

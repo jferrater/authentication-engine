@@ -6,7 +6,8 @@ import static org.hamcrest.Matchers.is;
 import com.github.joffryferrater.authentication.config.LdapConfig;
 import java.util.Optional;
 import org.apache.shiro.SecurityUtils;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -20,13 +21,8 @@ class AuthenticationIT {
     private static final String USER_DN_TEMPLATE = "uid={0},ou=Users,dc=myorg,dc=com";
     private AuthenticationManager target;
 
-    @AfterEach
-    void tearDown() {
-        SecurityUtils.setSecurityManager(null);
-    }
-
-    @Test
-    void shouldAuthenticateToLdapServer() {
+    @BeforeAll
+    void setUp() {
         Configuration configuration = () -> {
             LdapConfig ldapConfig = new LdapConfig();
             ldapConfig.setUrl(LDAP_URL);
@@ -36,13 +32,34 @@ class AuthenticationIT {
             return ldapConfig;
         };
         target = new AuthenticationManager(configuration);
+    }
+
+    @AfterAll
+    void tearDown() {
+        SecurityUtils.setSecurityManager(null);
+    }
+
+    @Test
+    void shouldAuthenticateToLdapServer() {
         String username = "joffry";
         String password = "password12345";
         UserCredentials userCredentials = new UserCredentials(username, password);
+
         Optional<UserInfo> result = target.authenticateCurrentUser(userCredentials);
 
         assertThat(result.isPresent(), is(true));
         assertThat(result.get().getUsername(), is(username));
         assertThat(result.get().isAuthenticated(), is(true));
+    }
+
+    @Test
+    void shouldNotAuthenticateInvalidUser() {
+        String username = "joffry34332";
+        String password = "password12345";
+        UserCredentials userCredentials = new UserCredentials(username, password);
+
+        Optional<UserInfo> result = target.authenticateCurrentUser(userCredentials);
+
+        assertThat(result.isPresent(), is(false));
     }
 }
