@@ -14,6 +14,16 @@ pipeline {
                 }
             }
         }
+        stage('Integration tests') {
+            steps {
+                sh './gradlew integrationTest'
+            }
+            post {
+                always {
+                    junit(testResults: '**/build/test-results/integrationTest/TEST-*.xml', allowEmptyResults: true)
+                }
+            }
+        }
         stage('Publish to local maven repository') {
             when {
                 branch 'master'

@@ -1,6 +1,6 @@
 package com.github.joffryferrater.authentication.config;
 
-public class LdapConfig {
+public class LdapConfig implements RealmConfig {
 
     private String organizationUnit;
     private String adminDn;
