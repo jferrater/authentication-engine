@@ -3,11 +3,13 @@ plugins {
     id 'idea'
 }
 
-group 'com.github.joffryferrater'
-version '0.1.0'
+allprojects {
+    group 'com.github.joffryferrater'
+    version '0.1.0'
 
-sourceCompatibility = 8
-targetCompatibility = 8
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
 
 wrapper() {
     gradleVersion = '5.4.1'

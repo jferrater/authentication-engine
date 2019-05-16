@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+    failFast = true
+    dependsOn 'cleanTest'
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+}
+
+dependencies {
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.5'
+    
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.5'
+    
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.1'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+}
