@@ -1,2 +1,3 @@
 rootProject.name = 'authentication-engine'
 
+include 'authentication-core'

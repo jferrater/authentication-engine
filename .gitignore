@@ -17,3 +17,10 @@ out
 *.idea
 .project
 .settings
+
+**/build/
+**/out/
+**/*.iml
+**/*.idea
+**/.project
+**/.settings
