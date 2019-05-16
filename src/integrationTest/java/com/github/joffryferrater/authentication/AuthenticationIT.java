@@ -10,14 +10,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @TestInstance(Lifecycle.PER_CLASS)
 class AuthenticationIT {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationIT.class);
-
+    private static final String LDAP_URL = "ldap://127.0.0.1:10389";
+    private static final String LDAP_ADMIN_DN = "uid=admin,ou=system";
+    private static final String PASSWORD = "secret";
+    private static final String USER_DN_TEMPLATE = "uid={0},ou=Users,dc=myorg,dc=com";
     private AuthenticationManager target;
 
     @AfterEach
@@ -29,18 +29,20 @@ class AuthenticationIT {
     void shouldAuthenticateToLdapServer() {
         Configuration configuration = () -> {
             LdapConfig ldapConfig = new LdapConfig();
-            ldapConfig.setUrl("ldap://localhost:389");
-            ldapConfig.setAdminDn("");
-            ldapConfig.setPassword("");
-            ldapConfig.setOrganizationUnit("ou=users");
+            ldapConfig.setUrl(LDAP_URL);
+            ldapConfig.setAdminDn(LDAP_ADMIN_DN);
+            ldapConfig.setPassword(PASSWORD);
+            ldapConfig.setUserDnTemplate(USER_DN_TEMPLATE);
             return ldapConfig;
         };
         target = new AuthenticationManager(configuration);
-        UserCredentials userCredentials = new UserCredentials("joffry", "password");
+        String username = "joffry";
+        String password = "password12345";
+        UserCredentials userCredentials = new UserCredentials(username, password);
         Optional<UserInfo> result = target.authenticateCurrentUser(userCredentials);
 
         assertThat(result.isPresent(), is(true));
-        assertThat(result.get().getUsername(), is("joffry"));
+        assertThat(result.get().getUsername(), is(username));
         assertThat(result.get().isAuthenticated(), is(true));
     }
 }

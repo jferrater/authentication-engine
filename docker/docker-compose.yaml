@@ -4,7 +4,7 @@ services:
   ldap-server:
     image: kwart/ldap-server:2017-09-04
     volumes:
-      - './resources/:/mnt/'
+      - './resources/ldap/:/mnt/'
     entrypoint:
       - 'java'
       - '-jar'

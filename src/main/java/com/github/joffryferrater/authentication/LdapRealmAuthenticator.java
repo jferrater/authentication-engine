@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 public class LdapRealmAuthenticator extends Authenticator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LdapRealmAuthenticator.class);
-    private static final String UID_TEMPLATE = "uid={0}";
 
     private LdapConfig ldapConfig;
 
@@ -31,7 +30,9 @@ public class LdapRealmAuthenticator extends Authenticator {
     private void setLdapRealm(DefaultSecurityManager securityManager) {
         DefaultLdapRealm ldapRealm = new DefaultLdapRealm();
         ldapRealm.setAuthenticationCachingEnabled(true);
-        ldapRealm.setUserDnTemplate(UID_TEMPLATE + ldapConfig.getOrganizationUnit());
+        String userDnTemplate = ldapConfig.getUserDnTemplate();
+        LOGGER.debug("User DN template {}", userDnTemplate);
+        ldapRealm.setUserDnTemplate(userDnTemplate);
         JndiLdapContextFactory jndiLdapContextFactory = createLdapContext(ldapConfig, ldapRealm);
         ldapRealm.setContextFactory(jndiLdapContextFactory);
         securityManager.setRealm(ldapRealm);

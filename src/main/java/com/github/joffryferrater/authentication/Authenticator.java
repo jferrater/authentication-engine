@@ -24,9 +24,9 @@ public class Authenticator {
                 LOGGER.info("The user {} is authenticated", username);
                 return Optional.of(new UserInfo(username, true));
             } catch (UnknownAccountException e) {
-                LOGGER.error("The user with username {} does not exist!", username, e.getMessage());
+                LOGGER.error("The user with username {} does not exist!", username, e.getMessage(), e);
             } catch (AuthenticationException e) {
-                LOGGER.error("An error has occurred during authentication: {}", e.getMessage());
+                LOGGER.error("An error has occurred during authentication: {}", e.getMessage(), e);
             }
         }
         return Optional.empty();

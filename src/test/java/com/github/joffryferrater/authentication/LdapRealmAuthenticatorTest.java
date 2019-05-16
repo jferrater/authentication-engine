@@ -26,7 +26,7 @@ class LdapRealmAuthenticatorTest {
     void setUp() {
         ldapConfig = new LdapConfig();
         ldapConfig.setAdminDn("uid=admin,dc=com");
-        ldapConfig.setOrganizationUnit("ou=users,dc=com");
+        ldapConfig.setUserDnTemplate("uid={0},ou=Users,dc=myOrg,dc=com");
         ldapConfig.setPassword("password");
         ldapConfig.setUrl("ldap://localhost:389");
     }

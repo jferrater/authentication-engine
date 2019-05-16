@@ -2,10 +2,18 @@ package com.github.joffryferrater.authentication.config;
 
 public class LdapConfig implements RealmConfig {
 
-    private String organizationUnit;
+    private String userDnTemplate;
     private String adminDn;
     private String password;
     private String url;
+
+    public String getUserDnTemplate() {
+        return userDnTemplate;
+    }
+
+    public void setUserDnTemplate(String userDnTemplate) {
+        this.userDnTemplate = userDnTemplate;
+    }
 
     public String getUrl() {
         return url;
@@ -13,14 +21,6 @@ public class LdapConfig implements RealmConfig {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getOrganizationUnit() {
-        return organizationUnit;
-    }
-
-    public void setOrganizationUnit(String organizationUnit) {
-        this.organizationUnit = organizationUnit;
     }
 
     public String getAdminDn() {
