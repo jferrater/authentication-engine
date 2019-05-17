@@ -19,7 +19,7 @@ pipeline {
                 dir('docker') {
                     sh 'docker-compose up -d'
                 }
-                sleep(time:5, unit: "SECONDS")
+                sleep(time:10, unit: "SECONDS")
                 sh './gradlew :authentication-core:integrationTest'
             }
             post {

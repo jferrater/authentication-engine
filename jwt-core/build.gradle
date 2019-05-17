@@ -19,6 +19,9 @@ test {
 
 dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.5'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+    implementation group: 'log4j', name: 'log4j', version: '1.2.17'
     
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.5'
