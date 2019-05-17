@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 import com.github.joffryferrater.authentication.config.LdapConfig;
 import java.util.Optional;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.util.ThreadContext;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
