@@ -6,7 +6,9 @@ import static org.hamcrest.Matchers.is;
 import com.github.joffryferrater.authentication.config.JdbcConfig;
 import java.util.Optional;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.util.ThreadContext;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -29,6 +31,11 @@ class JdbcAuthenticationIT {
             return jdbcConfig;
         };
         target = new AuthenticationManager(configuration);
+    }
+
+    @AfterEach
+    void resetUser() {
+        target.removeCurrentUserFromContext();
     }
 
     @AfterAll

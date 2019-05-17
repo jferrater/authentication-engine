@@ -26,12 +26,16 @@ public class Authenticator {
                 return Optional.of(new UserInfo(username, true));
             } catch (UnknownAccountException e) {
                 LOGGER.error("The user with username {} does not exist!", username, e.getMessage());
+                LOGGER.debug("",e);
             } catch (AuthenticationException e) {
                 LOGGER.error("Invalid username or password: {}", e.getMessage());
-            } finally {
-                ThreadContext.unbindSubject();
             }
         }
         return Optional.empty();
+    }
+
+    public void removeCurrentUserFromContext() {
+        ThreadContext.unbindSubject();
+        ThreadContext.remove();
     }
 }
