@@ -2,4 +2,3 @@ rootProject.name = 'authentication-engine'
 
 include 'authentication-core'
 include 'jwt-core'
-
