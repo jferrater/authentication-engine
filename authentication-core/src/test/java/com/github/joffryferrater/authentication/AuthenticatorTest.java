@@ -14,6 +14,7 @@ import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -33,6 +34,11 @@ class AuthenticatorTest {
         securityManager.setRealm(new TestRealm());
         SecurityUtils.setSecurityManager(securityManager);
         target = new Authenticator();
+    }
+
+    @AfterEach
+    void clearCurrentUser() {
+        target.removeCurrentUserFromContext();
     }
 
     @AfterAll
